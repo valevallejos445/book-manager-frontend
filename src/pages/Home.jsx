@@ -2,13 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const API_URL = "https://book-manager-backend-hg8h.onrender.com";
+
 export default function Home() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/api/books')
+    fetch(`${API_URL}/api/books`)
       .then(res => res.json())
       .then(data => {
         setBooks(data);

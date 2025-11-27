@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
+const API_URL = "https://book-manager-backend-hg8h.onrender.com";
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,13 +13,16 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       });
+
       const data = await res.json();
+
       if (res.ok) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
@@ -36,6 +41,7 @@ export default function Login() {
         <div className="card p-4 shadow">
           <h3 className="text-center mb-4">Iniciar Sesión</h3>
           {error && <div className="alert alert-danger">{error}</div>}
+
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <input
@@ -47,6 +53,7 @@ export default function Login() {
                 required
               />
             </div>
+
             <div className="mb-3">
               <input
                 type="password"
@@ -57,10 +64,12 @@ export default function Login() {
                 required
               />
             </div>
+
             <button type="submit" className="btn btn-primary w-100">
               Ingresar
             </button>
           </form>
+
           <div className="text-center mt-3">
             ¿No tenés cuenta? <Link to="/register">Registrarse</Link>
           </div>

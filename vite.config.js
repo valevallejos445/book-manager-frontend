@@ -7,11 +7,11 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'https://book-manager-backend-hg8h.onrender.com',
         changeOrigin: true,
         secure: false,
+        // Esto asegura que las peticiones a `/api/...` se redirijan al backend
       },
     },
   },
 });
-

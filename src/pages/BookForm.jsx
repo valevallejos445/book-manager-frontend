@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+const API_URL = "https://book-manager-backend-hg8h.onrender.com";
+
 export default function BookForm() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
@@ -13,7 +15,7 @@ export default function BookForm() {
 
   useEffect(() => {
     if (id) {
-      fetch(`/api/books/${id}`)
+      fetch(`${API_URL}/api/books/${id}`)
         .then(res => res.json())
         .then(book => {
           setTitle(book.title);
@@ -30,7 +32,10 @@ export default function BookForm() {
     setError('');
 
     const token = localStorage.getItem('token');
-    const url = id ? `/api/books/${id}` : '/api/books';
+    const url = id 
+      ? `${API_URL}/api/books/${id}`
+      : `${API_URL}/api/books`;
+
     const method = id ? 'PUT' : 'POST';
 
     try {

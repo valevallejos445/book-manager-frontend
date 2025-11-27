@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
+const API_URL = "https://book-manager-backend-hg8h.onrender.com";
+
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -12,13 +14,16 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password })
       });
+
       const data = await res.json();
+
       if (res.ok) {
         alert('Registro exitoso. Revisá tu email para verificar tu cuenta.');
         navigate('/login');
@@ -36,6 +41,7 @@ export default function Register() {
         <div className="card p-4 shadow">
           <h3 className="text-center mb-4">Registrarse</h3>
           {error && <div className="alert alert-danger">{error}</div>}
+
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <input
@@ -47,6 +53,7 @@ export default function Register() {
                 required
               />
             </div>
+
             <div className="mb-3">
               <input
                 type="email"
@@ -57,6 +64,7 @@ export default function Register() {
                 required
               />
             </div>
+
             <div className="mb-3">
               <input
                 type="password"
@@ -67,10 +75,12 @@ export default function Register() {
                 required
               />
             </div>
+
             <button type="submit" className="btn btn-primary w-100">
               Registrarse
             </button>
           </form>
+
           <div className="text-center mt-3">
             ¿Ya tenés cuenta? <Link to="/login">Iniciar sesión</Link>
           </div>
